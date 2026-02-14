@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Dearest Fariha</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap');
+
+        body, html {
+            margin: 0; padding: 0; height: 100%; width: 100%;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            font-family: 'Poppins', sans-serif;
+            display: flex; justify-content: center; align-items: center;
+            overflow: hidden; color: white;
+        }
+
+        /* Cursor Heart Effect */
+        .cursor-heart {
+            position: absolute; color: #ff4d6d;
+            pointer-events: none; font-size: 20px;
+            animation: fadeUp 1s ease-out forwards; z-index: 9999;
+        }
+        @keyframes fadeUp {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-50px) scale(1.5); opacity: 0; }
+        }
+
+        /* Floating Background Hearts */
+        .bg-heart {
+            position: absolute; color: rgba(255, 77, 109, 0.3);
+            pointer-events: none; animation: floatUp 6s linear infinite;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 30px;
+            padding: 40px; text-align: center; width: 85%; max-width: 650px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5); z-index: 10;
+        }
+
+        h1 { font-family: 'Dancing Script', cursive; font-size: 3.5rem; color: #ff4d6d; margin: 0; }
+        #typewriter { font-size: 1.2rem; min-height: 80px; color: #ffb7c5; margin: 20px 0; line-height: 1.6; }
+
+        .btn-group { display: none; justify-content: center; gap: 20px; }
+        button { 
+            padding: 12px 35px; border-radius: 50px; border: none; 
+            font-weight: bold; cursor: pointer; transition: 0.3s; 
+        }
+        #yesBtn { background: #ff4d6d; color: white; box-shadow: 0 5px 15px rgba(255,77,109,0.4); }
+        #noBtn { background: #444; color: white; position: relative; }
+
+        /* Gallery Section */
+        #photoSection { display: none; flex-direction: column; align-items: center; }
+        .gallery { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 25px; }
+        .polaroid { 
+            background: white; padding: 10px 10px 25px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4); transition: 0.4s; 
+        }
+        .polaroid img { width: 140px; height: 140px; object-fit: cover; background: #eee; }
+        .polaroid:hover { transform: scale(1.2) rotate(0deg) !important; z-index: 50; }
+    </style>
+</head>
+<body>
+
+    <div id="mainCard" class="card">
+        <div id="askSection">
+            <h1>Hi Fariha...</h1>
+            <div id="typewriter"></div>
+            <div class="btn-group" id="btnGroup">
+                <button id="yesBtn" onclick="showGallery()">YES! ❤️</button>
+                <button id="noBtn" onmouseover="moveNo()">No</button>
+            </div>
+        </div>
+
+        <div id="photoSection">
+            <h1>I Love You Forever!</h1>
+            <p style="color: #ffb7c5;">Fariha & Anmol</p>
+            <div class="gallery">
+                <div class="polaroid" style="transform: rotate(-5deg)"><img class="v-img" data-id="1"></div>
+                <div class="polaroid" style="transform: rotate(3deg)"><img class="v-img" data-id="2"></div>
+                <div class="polaroid" style="transform: rotate(-2deg)"><img class="v-img" data-id="3"></div>
+                <div class="polaroid" style="transform: rotate(5deg)"><img class="v-img" data-id="4"></div>
+                <div class="polaroid" style="transform: rotate(-3deg)"><img class="v-img" data-id="5"></div>
+            </div>
+            <p style="margin-top: 25px; font-style: italic;">"You are the best thing that ever happened to me."</p>
+        </div>
+    </div>
+
+    <script>
+        // 1. Cursor Heart Effect
+        document.addEventListener('mousemove', (e) => {
+            if (Math.random() > 0.8) {
+                const h = document.createElement('div');
+                h.className = 'cursor-heart';
+                h.innerHTML = '❤';
+                h.style.left = e.pageX + 'px';
+                h.style.top = e.pageY + 'px';
+                document.body.appendChild(h);
+                setTimeout(() => h.remove(), 1000);
+            }
+        });
+
+        // 2. Typewriter
+        const msg = "You are the most important person to me. I love you so much. Me and you forever, and I am very lucky to have you... So, will you be my Valentine?";
+        let charIndex = 0;
+        function type() {
+            if (charIndex < msg.length) {
+                document.getElementById('typewriter').innerHTML += msg.charAt(charIndex);
+                charIndex++;
+                setTimeout(type, 50);
+            } else {
+                document.getElementById('btnGroup').style.display = 'flex';
+            }
+        }
+
+        // 3. Move No Button
+        function moveNo() {
+            const b = document.getElementById('noBtn');
+            b.style.position = 'fixed';
+            b.style.left = Math.random() * (window.innerWidth - 100) + 'px';
+            b.style.top = Math.random() * (window.innerHeight - 50) + 'px';
+        }
+
+        // 4. Show Gallery & Fix Photos
+        function showGallery() {
+            document.getElementById('askSection').style.display = 'none';
+            document.getElementById('photoSection').style.display = 'flex';
+            document.getElementById('mainCard').style.maxWidth = '850px';
+            
+            const images = document.querySelectorAll('.v-img');
+            images.forEach(img => {
+                const id = img.getAttribute('data-id');
+                // This tries every possible filename variant automatically!
+                const paths = [`photo${id}.png`, `photo${id}.png.png`, `photo${id}.jpg`, `photo${id}`];
+                let attempt = 0;
+                img.onerror = function() {
+                    if (attempt < paths.length - 1) {
+                        attempt++;
+                        this.src = paths[attempt];
+                    }
+                };
+                img.src = paths[0];
+            });
+        }
+
+        // 5. Background Hearts
+        setInterval(() => {
+            const h = document.createElement('div');
+            h.className = 'bg-heart';
+            h.innerHTML = '❤';
+            h.style.left = Math.random() * 100 + 'vw';
+            h.style.fontSize = Math.random() * 20 + 10 + 'px';
+            document.body.appendChild(h);
+            setTimeout(() => h.remove(), 6000);
+        }, 400);
+
+        window.onload = type;
+    </script>
+</body>
+</html>
